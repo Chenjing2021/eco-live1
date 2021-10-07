@@ -93,7 +93,8 @@ def userPage(request):
 	return render(request, 'store/customer.html', context)
 
 
-
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin',  'customer'])
 def store(request):
 	products = Product.objects.all()
 	myFilter = ProductFilter(request.GET, queryset=products)
@@ -103,8 +104,7 @@ def store(request):
 	return render(request, 'store/store.html', context)
 
 
-@login_required(login_url='login')
-@allowed_users(allowed_roles=['admin',  'customer'])
+
 def storeout(request):
 
    products = Product.objects.all()
